@@ -8,13 +8,6 @@ const examples = [
   "What makes a good open-source project?",
 ];
 
-const leaderboard = [
-  ["01", "Open Model Alpha", "1342"],
-  ["02", "Open Model Beta", "1318"],
-  ["03", "Open Model Gamma", "1297"],
-  ["04", "Open Model Delta", "1276"],
-];
-
 export default function Home() {
   const [prompt, setPrompt] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -49,7 +42,7 @@ export default function Home() {
         </a>
 
         <div className="nav-center">
-          <a className="active" href="#blind-arena">
+          <a className="active" href="/">
             Blind Arena
           </a>
         </div>
@@ -68,19 +61,25 @@ export default function Home() {
 
           {menuOpen && (
             <div className="menu-popover">
-              <a href="#leaderboard" onClick={() => setMenuOpen(false)}>
+              <a href="/leaderboard" onClick={() => setMenuOpen(false)}>
                 Leaderboard
               </a>
-              <a href="#how-it-works" onClick={() => setMenuOpen(false)}>
+              <a href="/how-it-works" onClick={() => setMenuOpen(false)}>
                 How It Works
               </a>
-              <a href="#platform-rules" onClick={() => setMenuOpen(false)}>
+              <a href="/rules" onClick={() => setMenuOpen(false)}>
                 Platform Rules
               </a>
-              <a href="#models" onClick={() => setMenuOpen(false)}>
+              <a href="/models" onClick={() => setMenuOpen(false)}>
                 Models
               </a>
-              <a href="#about" onClick={() => setMenuOpen(false)}>
+              <a href="/battles" onClick={() => setMenuOpen(false)}>
+                Battles
+              </a>
+              <a href="/docs" onClick={() => setMenuOpen(false)}>
+                API Docs
+              </a>
+              <a href="/about" onClick={() => setMenuOpen(false)}>
                 About
               </a>
             </div>
@@ -129,34 +128,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="battle-preview" id="how-it-works">
-        <div className="section-label">HOW IT WORKS</div>
-        <div className="steps">
-          <div className="step">
-            <b>01</b>
-            <h3>Ask</h3>
-            <p>Send any prompt to the arena.</p>
-          </div>
-          <div className="step">
-            <b>02</b>
-            <h3>Compare</h3>
-            <p>Two anonymous open models respond.</p>
-          </div>
-          <div className="step">
-            <b>03</b>
-            <h3>Vote</h3>
-            <p>Pick the answer you think is better.</p>
-          </div>
-          <div className="step">
-            <b>04</b>
-            <h3>Rank</h3>
-            <p>Your vote helps shape the ELO leaderboard.</p>
-          </div>
-        </div>
-      </section>
-
       <section className="preview-grid" id="blind-arena">
-        <div className="preview-card">
+        <div className="preview-card arena-card">
           <div className="card-top">
             <span>BLIND ARENA</span>
             <span>● LIVE</span>
@@ -182,42 +155,26 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="rank-card" id="leaderboard">
-          <div className="card-top">
-            <span>LEADERBOARD</span>
-            <a href="#leaderboard">View all →</a>
-          </div>
-          {leaderboard.map(([rank, name, elo]) => (
-            <div className="rank-row" key={rank}>
-              <b>{rank}</b>
-              <span>{name}</span>
-              <strong>{elo}</strong>
+        <div className="side-stack">
+          <article className="info-card compact-card">
+            <div className="card-top">
+              <span>MODEL ACCESS</span>
             </div>
-          ))}
+            <p>
+              Light models run on OpenArena infrastructure. Heavy models must expose a public API
+              for evaluation.
+            </p>
+          </article>
+
+          <article className="info-card compact-card">
+            <div className="card-top">
+              <span>PLATFORM RULES</span>
+            </div>
+            <p>
+              No user registration. Only open-source or open-weight models can enter the arena.
+            </p>
+          </article>
         </div>
-      </section>
-
-      <section className="info-grid">
-        <article className="info-card" id="platform-rules">
-          <div className="card-top">
-            <span>PLATFORM RULES</span>
-          </div>
-          <p>
-            OpenArena is invite-free for users. Only open-source or open-weight models are listed.
-            Lightweight models are hosted on OpenArena infrastructure. Heavy models must provide a
-            public API endpoint for evaluation.
-          </p>
-        </article>
-
-        <article className="info-card" id="models">
-          <div className="card-top">
-            <span>MODEL ACCESS</span>
-          </div>
-          <p>
-            Every model must disclose its license, context length, runtime requirements, and hosting
-            path before entering the arena.
-          </p>
-        </article>
       </section>
 
       <footer id="about">
