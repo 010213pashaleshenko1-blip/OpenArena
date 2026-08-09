@@ -9,12 +9,12 @@ type Model = { rank: string; name: string; elo: string; battles: string; icon: s
 
 const rankings: Record<string, Model[]> = {
   Coding: [
-    { rank: "01", name: "GLM-5.2", elo: "1418", battles: "8,421", icon: "G" , status: "Seted by system" },
-    { rank: "02", name: "Qwen-3.8-Max", elo: "1372", battles: "7,912", icon: "Q" },
-    { rank: "03", name: "GLM-5.1", elo: "1319", battles: "6,804", icon: "G" },
-    { rank: "04", name: "Qwen-3.7-Max", elo: "1277", battles: "5,991", icon: "Q" },
-    { rank: "05", name: "Qwen-3.7-Plus", elo: "1248", battles: "5,421", icon: "Q" },
-    { rank: "06", name: "DeepSeek-4-Pro", elo: "1219", battles: "4,887", icon: "D" },
+    { rank: "01", name: "glm-5.2", elo: "1418", battles: "8,421", icon: "G", status: "seted by system" },
+    { rank: "02", name: "qwen-3.8-max", elo: "1372", battles: "7,912", icon: "Q" },
+    { rank: "03", name: "glm-5.1", elo: "1319", battles: "6,804", icon: "G" },
+    { rank: "04", name: "qwen-3.7-max", elo: "1277", battles: "5,991", icon: "Q" },
+    { rank: "05", name: "qwen-3.7-plus", elo: "1248", battles: "5,421", icon: "Q" },
+    { rank: "06", name: "deepseek-4-pro", elo: "1219", battles: "4,887", icon: "D" },
   ],
   Chat: [
     { rank: "01", name: "Open Model Beta", elo: "1431", battles: "12,481", icon: "B" },
@@ -55,7 +55,11 @@ export default function LeaderboardPage() {
   return (
     <SiteShell title="Leaderboard" description="Community votes shape the rankings across different model capabilities." badge="MODEL RANKINGS">
       <div className="category-tabs" role="tablist" aria-label="Leaderboard categories">
-        {categories.map((item) => <button key={item} className={category === item ? "selected" : ""} onClick={() => setCategory(item)} role="tab" aria-selected={category === item}>{item}</button>)}
+        {categories.map((item) => (
+          <button key={item} className={category === item ? "selected" : ""} onClick={() => setCategory(item)} role="tab" aria-selected={category === item}>
+            {item}
+          </button>
+        ))}
       </div>
       <section className="content-grid">
         <article className="content-card">
@@ -63,7 +67,13 @@ export default function LeaderboardPage() {
           {rows.map((model) => (
             <div className="rank-row" key={model.rank}>
               <b>{model.rank}</b>
-              <span className="model-name"><span className="model-icon">{model.icon}</span><span><span className="model-title">{model.name}</span>{model.status && <small>{model.status}</small>}</span></span>
+              <span className="model-name">
+                <span className="model-icon">{model.icon}</span>
+                <span>
+                  <span className="model-title">{model.name}</span>
+                  {model.status && <small>{model.status}</small>}
+                </span>
+              </span>
               <strong>{model.elo} · {model.battles}</strong>
             </div>
           ))}
