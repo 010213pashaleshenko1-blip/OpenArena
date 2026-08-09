@@ -5,13 +5,47 @@ import { SiteShell } from "../components/site-shell";
 
 const categories = ["Coding", "Chat", "Image", "Vision", "Image-to-Text", "Video"];
 
-const rankings: Record<string, string[][]> = {
-  Coding: [["01", "Open Model Alpha", "1418", "8,421"], ["02", "Open Model Beta", "1372", "7,912"], ["03", "Open Model Gamma", "1319", "6,804"], ["04", "Open Model Delta", "1277", "5,991"]],
-  Chat: [["01", "Open Model Beta", "1431", "12,481"], ["02", "Open Model Alpha", "1398", "11,205"], ["03", "Open Model Delta", "1324", "9,842"], ["04", "Open Model Gamma", "1291", "8,714"]],
-  Image: [["01", "Open Vision Alpha", "1386", "4,281"], ["02", "Open Vision Beta", "1340", "3,918"], ["03", "Open Model Gamma", "1297", "3,421"], ["04", "Open Vision Delta", "1258", "2,884"]],
-  Vision: [["01", "Open Vision Alpha", "1422", "5,182"], ["02", "Open Model Beta", "1364", "4,701"], ["03", "Open Vision Gamma", "1321", "4,116"], ["04", "Open Model Alpha", "1289", "3,907"]],
-  "Image-to-Text": [["01", "Open Vision Beta", "1397", "3,921"], ["02", "Open Vision Alpha", "1378", "3,604"], ["03", "Open Model Gamma", "1306", "3,102"], ["04", "Open Vision Delta", "1268", "2,744"]],
-  Video: [["01", "Open Video Alpha", "1369", "2,481"], ["02", "Open Video Beta", "1331", "2,104"], ["03", "Open Vision Gamma", "1288", "1,892"], ["04", "Open Video Delta", "1247", "1,504"]],
+type Model = { rank: string; name: string; elo: string; battles: string; icon: string; status?: string };
+
+const rankings: Record<string, Model[]> = {
+  Coding: [
+    { rank: "01", name: "GLM-5.2", elo: "1418", battles: "8,421", icon: "G" , status: "Seted by system" },
+    { rank: "02", name: "Qwen-3.8-Max", elo: "1372", battles: "7,912", icon: "Q" },
+    { rank: "03", name: "GLM-5.1", elo: "1319", battles: "6,804", icon: "G" },
+    { rank: "04", name: "Qwen-3.7-Max", elo: "1277", battles: "5,991", icon: "Q" },
+    { rank: "05", name: "Qwen-3.7-Plus", elo: "1248", battles: "5,421", icon: "Q" },
+    { rank: "06", name: "DeepSeek-4-Pro", elo: "1219", battles: "4,887", icon: "D" },
+  ],
+  Chat: [
+    { rank: "01", name: "Open Model Beta", elo: "1431", battles: "12,481", icon: "B" },
+    { rank: "02", name: "Open Model Alpha", elo: "1398", battles: "11,205", icon: "A" },
+    { rank: "03", name: "Open Model Delta", elo: "1324", battles: "9,842", icon: "D" },
+    { rank: "04", name: "Open Model Gamma", elo: "1291", battles: "8,714", icon: "G" },
+  ],
+  Image: [
+    { rank: "01", name: "Open Vision Alpha", elo: "1386", battles: "4,281", icon: "A" },
+    { rank: "02", name: "Open Vision Beta", elo: "1340", battles: "3,918", icon: "B" },
+    { rank: "03", name: "Open Model Gamma", elo: "1297", battles: "3,421", icon: "G" },
+    { rank: "04", name: "Open Vision Delta", elo: "1258", battles: "2,884", icon: "D" },
+  ],
+  Vision: [
+    { rank: "01", name: "Open Vision Alpha", elo: "1422", battles: "5,182", icon: "A" },
+    { rank: "02", name: "Open Model Beta", elo: "1364", battles: "4,701", icon: "B" },
+    { rank: "03", name: "Open Vision Gamma", elo: "1321", battles: "4,116", icon: "G" },
+    { rank: "04", name: "Open Model Alpha", elo: "1289", battles: "3,907", icon: "A" },
+  ],
+  "Image-to-Text": [
+    { rank: "01", name: "Open Vision Beta", elo: "1397", battles: "3,921", icon: "B" },
+    { rank: "02", name: "Open Vision Alpha", elo: "1378", battles: "3,604", icon: "A" },
+    { rank: "03", name: "Open Model Gamma", elo: "1306", battles: "3,102", icon: "G" },
+    { rank: "04", name: "Open Vision Delta", elo: "1268", battles: "2,744", icon: "D" },
+  ],
+  Video: [
+    { rank: "01", name: "Open Video Alpha", elo: "1369", battles: "2,481", icon: "A" },
+    { rank: "02", name: "Open Video Beta", elo: "1331", battles: "2,104", icon: "B" },
+    { rank: "03", name: "Open Vision Gamma", elo: "1288", battles: "1,892", icon: "G" },
+    { rank: "04", name: "Open Video Delta", elo: "1247", battles: "1,504", icon: "D" },
+  ],
 };
 
 export default function LeaderboardPage() {
@@ -26,7 +60,13 @@ export default function LeaderboardPage() {
       <section className="content-grid">
         <article className="content-card">
           <h2>{category} ranking</h2>
-          {rows.map(([rank, name, elo, battles]) => <div className="rank-row" key={rank}><b>{rank}</b><span>{name}</span><strong>{elo} · {battles}</strong></div>)}
+          {rows.map((model) => (
+            <div className="rank-row" key={model.rank}>
+              <b>{model.rank}</b>
+              <span className="model-name"><span className="model-icon">{model.icon}</span><span><span className="model-title">{model.name}</span>{model.status && <small>{model.status}</small>}</span></span>
+              <strong>{model.elo} · {model.battles}</strong>
+            </div>
+          ))}
         </article>
       </section>
     </SiteShell>
